@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
 
         // JUMP
         if (Input.GetKeyDown(KeyConfig.Jump))
-            if(CheckIsOnGround())
+            if (CheckIsOnGround())
                 Jump();
     }
 
@@ -43,12 +43,13 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         rb.AddForce(Vector3.up * JumpHeight, ForceMode.Impulse);
+        rb.AddForce(Vector3.Normalize(movement) * Speed / 2.0f, ForceMode.Impulse);
     }
 
     private bool CheckIsOnGround()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 1f))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, transform.localScale.y * 1.1f))
             return true;
         else
             return false;
